@@ -1,0 +1,12 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# LaTeX junk
+*.aux
+*.log
+*.out
+
+# OS trash
+Thumbs.db
+.DS_Store
