@@ -1,0 +1,29 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction and Dataset}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Dataset Description and EDA}{1}{section.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces EDA: class distribution (balanced), token-length histogram (peak 40–45 words), and top-15 BoW terms after stop-word removal.}}{1}{figure.caption.1}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:eda}{{1}{1}{EDA: class distribution (balanced), token-length histogram (peak 40–45 words), and top-15 BoW terms after stop-word removal}{figure.caption.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Methodology}{1}{section.3}\protected@file@percent }
+\newlabel{fig:scree}{{2a}{2}{Scree curves: PCA retains \bertPcaVar {} of DistilBERT variance at $n{=}100$; SVD retains only \tfidfSvdVar {} for TF-IDF}{figure.caption.2}{}}
+\newlabel{sub@fig:scree}{{a}{2}{Scree curves: PCA retains \bertPcaVar {} of DistilBERT variance at $n{=}100$; SVD retains only \tfidfSvdVar {} for TF-IDF}{figure.caption.2}{}}
+\newlabel{fig:acc}{{2b}{2}{Accuracy across all models and feature spaces. Sparse $\to $ GloVe $\to $ DistilBERT is consistent}{figure.caption.2}{}}
+\newlabel{sub@fig:acc}{{b}{2}{Accuracy across all models and feature spaces. Sparse $\to $ GloVe $\to $ DistilBERT is consistent}{figure.caption.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Dimensionality reduction variance retention (left) and overall accuracy comparison (right).}}{2}{figure.caption.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Experiments}{2}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Results}{2}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Full Numerical Results}{2}{subsection.5.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Accuracy and Macro F1-score for all model--feature combinations. Best per model in \textbf  {bold}.}}{2}{table.caption.3}\protected@file@percent }
+\newlabel{tab:results}{{1}{2}{Accuracy and Macro F1-score for all model--feature combinations. Best per model in \textbf {bold}}{table.caption.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Per-Class F1 and Error Analysis}{3}{subsection.5.2}\protected@file@percent }
+\newlabel{fig:f1}{{3a}{3}{Per-class F1: BoW (left) vs Reduced DistilBERT PCA (right). Sports easiest; Business/Sci/Tech confusion persists}{figure.caption.4}{}}
+\newlabel{sub@fig:f1}{{a}{3}{Per-class F1: BoW (left) vs Reduced DistilBERT PCA (right). Sports easiest; Business/Sci/Tech confusion persists}{figure.caption.4}{}}
+\newlabel{fig:cm}{{3b}{3}{\bestModel {} on \bestFeat {} (\bestAcc {}). Sports \cmSportsCorrect /\cmSportsTotal {}; primary error: \cmBizToSci {} Business$\to $Sci/Tech}{figure.caption.4}{}}
+\newlabel{sub@fig:cm}{{b}{3}{\bestModel {} on \bestFeat {} (\bestAcc {}). Sports \cmSportsCorrect /\cmSportsTotal {}; primary error: \cmBizToSci {} Business$\to $Sci/Tech}{figure.caption.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Per-class F1 heatmap (left) and best-model confusion matrix (right).}}{3}{figure.caption.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Discussion}{3}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusion and Learnings}{3}{section.7}\protected@file@percent }
+\gdef \@abspage@last{3}

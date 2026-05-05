@@ -1,0 +1,43 @@
+\begin{table}[H]
+\centering
+\caption{Accuracy and Macro F1-score for all model--feature combinations. Best accuracy per model shown in \textbf{bold}.}
+\label{tab:results}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{llcc}
+\toprule
+\textbf{Model} & \textbf{Feature Set} & \textbf{Accuracy} & \textbf{Macro F1} \\
+\midrule
+Logistic Regression & Bag-of-Words (unigram) & 0.8594 & 0.8582 \\
+Logistic Regression & TF-IDF (unigram+bigram) & 0.8888 & 0.8874 \\
+Logistic Regression & Reduced TF-IDF (SVD, 100d) & 0.8612 & 0.8596 \\
+Logistic Regression & GloVe mean-pool (100d) & 0.8756 & 0.8745 \\
+Logistic Regression & Reduced GloVe (PCA, 100d) & 0.8744 & 0.8733 \\
+Logistic Regression & DistilBERT (768d) & 0.8862 & 0.8854 \\
+Logistic Regression & Reduced DistilBERT (PCA, 100d) & \textbf{0.8906} & 0.8895 \\
+\midrule
+Linear SVM & Bag-of-Words (unigram) & 0.8163 & 0.8145 \\
+Linear SVM & TF-IDF (unigram+bigram) & 0.8862 & 0.8851 \\
+Linear SVM & Reduced TF-IDF (SVD, 100d) & 0.8600 & 0.8585 \\
+Linear SVM & GloVe mean-pool (100d) & 0.8750 & 0.8739 \\
+Linear SVM & Reduced GloVe (PCA, 100d) & 0.8750 & 0.8739 \\
+Linear SVM & DistilBERT (768d) & 0.8738 & 0.8723 \\
+Linear SVM & Reduced DistilBERT (PCA, 100d) & \textbf{0.8894} & 0.8884 \\
+\midrule
+RBF SVM & Bag-of-Words (unigram) & 0.8750 & 0.8737 \\
+RBF SVM & TF-IDF (unigram+bigram) & 0.8869 & 0.8856 \\
+RBF SVM & Reduced TF-IDF (SVD, 100d) & 0.8694 & 0.8682 \\
+RBF SVM & GloVe mean-pool (100d) & 0.8775 & 0.8766 \\
+RBF SVM & Reduced GloVe (PCA, 100d) & 0.8875 & 0.8866 \\
+RBF SVM & DistilBERT (768d) & 0.8919 & 0.8908 \\
+RBF SVM & Reduced DistilBERT (PCA, 100d) & \textbf{0.9019} & 0.9009 \\
+\midrule
+KNN & Bag-of-Words (unigram) & 0.5312 & 0.5309 \\
+KNN & TF-IDF (unigram+bigram) & 0.8381 & 0.8361 \\
+KNN & Reduced TF-IDF (SVD, 100d) & 0.7900 & 0.7876 \\
+KNN & GloVe mean-pool (100d) & 0.8656 & 0.8640 \\
+KNN & Reduced GloVe (PCA, 100d) & 0.8656 & 0.8640 \\
+KNN & DistilBERT (768d) & \textbf{0.8806} & 0.8792 \\
+KNN & Reduced DistilBERT (PCA, 100d) & 0.8756 & 0.8741 \\
+\bottomrule
+\end{tabular}
+\end{table}

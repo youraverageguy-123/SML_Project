@@ -1,0 +1,35 @@
+\begin{table}[H]
+\centering
+\caption{Accuracy and Macro F1 across all model--feature combinations.}
+\label{tab:results}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{llcc}
+\toprule
+\textbf{Model} & \textbf{Feature Set} & \textbf{Accuracy} & \textbf{Macro F1} \\
+\midrule
+Logistic Regression & Bag-of-Words & 0.8594 & 0.8580 \\
+Logistic Regression & TF-IDF & 0.7913 & 0.7925 \\
+Logistic Regression & Reduced TF-IDF (SVD) & 0.6831 & 0.6859 \\
+Logistic Regression & DistilBERT (Uncompressed) & 0.8862 & 0.8854 \\
+Logistic Regression & Reduced DistilBERT (PCA) & 0.8906 & 0.8895 \\
+\midrule
+Linear SVM & Bag-of-Words & 0.8194 & 0.8174 \\
+Linear SVM & TF-IDF & 0.7825 & 0.7841 \\
+Linear SVM & Reduced TF-IDF (SVD) & 0.5750 & 0.5808 \\
+Linear SVM & DistilBERT (Uncompressed) & 0.8738 & 0.8723 \\
+Linear SVM & Reduced DistilBERT (PCA) & 0.8894 & 0.8884 \\
+\midrule
+RBF SVM & Bag-of-Words & 0.8800 & 0.8786 \\
+RBF SVM & TF-IDF & 0.7913 & 0.7922 \\
+RBF SVM & Reduced TF-IDF (SVD) & 0.6594 & 0.6650 \\
+RBF SVM & DistilBERT (Uncompressed) & 0.8919 & 0.8908 \\
+RBF SVM & Reduced DistilBERT (PCA) & 0.9019 & 0.9009 \\
+\midrule
+KNN & Bag-of-Words & 0.5575 & 0.5563 \\
+KNN & TF-IDF & 0.4919 & 0.4863 \\
+KNN & Reduced TF-IDF (SVD) & 0.6619 & 0.6583 \\
+KNN & DistilBERT (Uncompressed) & 0.8806 & 0.8792 \\
+KNN & Reduced DistilBERT (PCA) & 0.8756 & 0.8741 \\
+\bottomrule
+\end{tabular}
+\end{table}
