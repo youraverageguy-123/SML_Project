@@ -41,7 +41,7 @@ statistical machine learning models when applied to three fundamentally differen
 representation paradigms. We contrast traditional sparse feature extraction
 (Bag-of-Words and TF-IDF), static dense word embeddings (GloVe), and modern contextual
 embeddings from a pre-trained language model (DistilBERT). The project strictly utilises
-classical models --- Logistic Regression, Linear SVM, RBF SVM, KNN, and KMeans --- to
+classical models like Logistic Regression, Linear SVM, RBF SVM, KNN, and KMeans, to
 evaluate these feature spaces, treating DistilBERT and GloVe purely as feature extractors
 with no fine-tuning performed.
 
@@ -123,9 +123,9 @@ extractor. The \texttt{[CLS]} token from the final hidden state yielded a dense
 \subsection{Part E: Dimensionality Reduction}
 Feature spaces were compressed to 100 dimensions.
 \begin{itemize}
-    \item \textbf{Truncated SVD} on TF-IDF: retains only \textbf{\tfidfSvdVar} ---
+    \item \textbf{Truncated SVD} on TF-IDF: retains only \textbf{\tfidfSvdVar};
           the sparse space is nearly isotropic.
-    \item \textbf{PCA} on DistilBERT: retains \textbf{\bertPcaVar} --- strong
+    \item \textbf{PCA} on DistilBERT: retains \textbf{\bertPcaVar}; strong
           structure concentrated in a small subspace.
     \item \textbf{PCA} on GloVe: retains \textbf{\glovePcaVar} (compression check).
 \end{itemize}
@@ -218,7 +218,7 @@ Best accuracy per model is \textbf{bold}.
     \centering
     \includegraphics[width=0.80\textwidth]{07_confusion_matrix.png}
     \caption{Confusion matrix for \bestModel{} on \bestFeat{}
-             (\bestAcc{} accuracy --- best overall).
+             (\bestAcc{} accuracy which is best overall).
              Sports: \cmSportsCorrect/\cmSportsTotal{} correct.
              Primary error: \cmBizToSci{} Business articles misclassified as Sci/Tech.}
     \label{fig:cm}
@@ -240,7 +240,7 @@ Best accuracy per model is \textbf{bold}.
 \subsection{Curse of Dimensionality}
 Most clearly illustrated by KNN: on \vocabSize{} sparse BoW dimensions, accuracy
 collapses to \knnBoWAcc{}. With dense 768-dimensional DistilBERT vectors, the same
-KNN achieves \knnBertAcc{} --- a \knnJumpPP{}-point jump from a feature change alone.
+KNN achieves \knnBertAcc{} which is a \knnJumpPP{}-point jump from a feature change alone.
 
 \subsection{Dimensionality Reduction Efficacy}
 PCA retains \bertPcaVar{} of DistilBERT variance in 100 components, allowing
@@ -252,7 +252,7 @@ dense structured embeddings, destructive for sparse representations.
 The t-SNE comparison (Figure~\ref{fig:tsne}) and centroid heatmaps
 (Figure~\ref{fig:centroid}) together explain the accuracy gap geometrically.
 BoW centroids show substantially higher off-diagonal cosine similarity than
-DistilBERT centroids --- the gap is a property of the feature space, not the classifier.
+DistilBERT centroids; the gap is a property of the feature space, not the classifier.
 
 \subsection{Class-level Confusion}
 Sports is easiest due to domain-specific vocabulary. \cmBizToSci{} Business articles
@@ -313,8 +313,8 @@ accuracy at low training cost. \bestModel{} achieves the overall best at \bestAc
 \section{Conclusion and Learnings}
 
 This project demonstrated that classical ML performance is fundamentally bounded by
-input feature quality. The three-tier comparison --- sparse features, GloVe, DistilBERT
---- establishes a hierarchy corresponding directly to representational richness.
+input feature quality. The three-tier comparison of sparse features, GloVe, DistilBERT;
+establishes a hierarchy corresponding directly to representational richness.
 
 The best-performing configuration is \bestModel{} on \bestFeat{} at \bestAcc{}
 (Macro F1 $=$ \bestFscore{}). PCA on DistilBERT retains \bertPcaVar{} in 100

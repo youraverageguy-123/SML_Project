@@ -1,26 +1,16 @@
-r"""
-generate_report_text.py
-Extracts every statistic from the results dict and writes them
-as LaTeX \newcommand definitions to outputs/stats.tex.
-"""
-
 from __future__ import annotations
 import os
 import numpy as np
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
-
 OUT_PATH    = "outputs/stats.tex"
 LABEL_NAMES = ["World", "Sports", "Business", "Sci/Tech"]
 RANDOM_SEED = 42
-
-
 def _pct(val: float) -> str:
     return f"{val * 100:.2f}"
 
 def _cmd(name: str, value: str) -> str:
     return f"\\newcommand{{\\{name}}}{{{value}}}"
-
 
 def write_stats_tex(
     results: dict,
@@ -33,17 +23,12 @@ def write_stats_tex(
         "% Re-run python main.py to update all values.",
         "",
     ]
-
     sup = results
-
     def acc(model: str, feat: str) -> float:
         return sup.get(model, {}).get(feat, {}).get("accuracy") or 0.0
-
-    # -- KNN numbers
     knn_bow      = acc("KNN", "Bag-of-Words")
     knn_bert     = acc("KNN", "DistilBERT (Uncompressed)")
     knn_jump     = abs(knn_bert - knn_bow) * 100
-
     cmds += [
         "% -- KNN",
         _cmd("knnBoWAcc",      f"{_pct(knn_bow)}\\%"),
@@ -51,13 +36,10 @@ def write_stats_tex(
         _cmd("knnJumpPP",      f"{knn_jump:.0f}"),
         "",
     ]
-
-    # -- Logistic Regression numbers
     lr_tfidf        = acc("Logistic Regression", "TF-IDF")
     lr_svd          = acc("Logistic Regression", "Reduced TF-IDF (SVD)")
     lr_bert         = acc("Logistic Regression", "DistilBERT (Uncompressed)")
     lr_bert_pca     = acc("Logistic Regression", "Reduced DistilBERT (PCA)")
-
     cmds += [
         "% -- Logistic Regression",
         _cmd("lrBoWAcc",        f"{_pct(acc('Logistic Regression', 'Bag-of-Words'))}\\%"),
@@ -69,13 +51,10 @@ def write_stats_tex(
         _cmd("lrTfidfDrop",     f"{_pct(lr_tfidf)}\\% $\\to$ {_pct(lr_svd)}\\%"),
         "",
     ]
-
-    # -- Linear SVM numbers
     lsvm_tfidf  = acc("Linear SVM", "TF-IDF")
     lsvm_svd    = acc("Linear SVM", "Reduced TF-IDF (SVD)")
     lsvm_bert   = acc("Linear SVM", "DistilBERT (Uncompressed)")
     lsvm_pca    = acc("Linear SVM", "Reduced DistilBERT (PCA)")
-
     cmds += [
         "% -- Linear SVM",
         _cmd("lsvmTfidfAcc",    f"{_pct(lsvm_tfidf)}\\%"),
@@ -85,19 +64,14 @@ def write_stats_tex(
         _cmd("lsvmPcaAcc",      f"{_pct(lsvm_pca)}\\%"),
         "",
     ]
-
-    # -- RBF SVM numbers
     rbf_bert_pca = acc("RBF SVM", "Reduced DistilBERT (PCA)")
     rbf_bert     = acc("RBF SVM", "DistilBERT (Uncompressed)")
-
     cmds += [
         "% -- RBF SVM",
         _cmd("rbfBertPcaAcc",   f"{_pct(rbf_bert_pca)}\\%"),
         _cmd("rbfBertAcc",      f"{_pct(rbf_bert)}\\%"),
         "",
     ]
-
-    # -- Best configuration overall
     best_acc, best_f1, best_model, best_feat = 0.0, 0.0, "", ""
     for model_name, model_res in results.items():
         for feat_name, res in model_res.items():
@@ -107,7 +81,6 @@ def write_stats_tex(
                 best_f1    = res.get("macro_f1") or 0.0
                 best_model = model_name
                 best_feat  = feat_name
-
     cmds += [
         "% -- Best overall",
         _cmd("bestAcc",         f"{_pct(best_acc)}\\%"),
@@ -116,13 +89,10 @@ def write_stats_tex(
         _cmd("bestFeat",        best_feat),
         "",
     ]
-
-    # -- Variance retention
     idx = min(99, len(variance_curves["n_components"]) - 1)
     bert_var  = variance_curves["distilbert_pca"][idx]
     tfidf_var = variance_curves["tfidf_svd"][idx]
     glove_var = variance_curves.get("glove_pca", [100.0] * 100)[idx]
-
     cmds += [
         "% -- Variance retention",
         _cmd("bertPcaVar",      f"{bert_var:.2f}\\%"),
@@ -130,14 +100,10 @@ def write_stats_tex(
         _cmd("glovePcaVar",     f"{glove_var:.2f}\\%"),
         "",
     ]
-
-    # -- KMeans NMI / ARI
     km = results.get("KMeans", {})
-
     def km_stat(feat: str, stat: str) -> str:
         val = km.get(feat, {}).get(stat)
         return f"{val:.4f}" if val is not None else "N/A"
-
     cmds += [
         "% -- KMeans",
         _cmd("kmBowNmi",        km_stat("Bag-of-Words", "nmi")),
@@ -149,8 +115,6 @@ def write_stats_tex(
         _cmd("kmGloveAri",      km_stat("GloVe (Mean-pool)", "ari")),
         "",
     ]
-
-    # -- GloVe numbers
     glove_best = max(
         (acc(m, "GloVe (Mean-pool)") for m in results),
         default=0.0,
@@ -163,8 +127,6 @@ def write_stats_tex(
         _cmd("gloveRbfAcc",     f"{_pct(glove_rbf)}\\%"),
         "",
     ]
-
-    # -- Confusion matrix counts (refit RBF SVM on reduced DistilBERT)
     from .classical_models import build_model
     X_train, X_test, y_train, y_test = train_test_split(
         reduced_distilbert, y, test_size=0.2, random_state=RANDOM_SEED
@@ -173,12 +135,10 @@ def write_stats_tex(
     model.fit(X_train, y_train)
     preds = model.predict(X_test)
     cm    = confusion_matrix(y_test, preds)
-
     sports_correct = int(cm[1, 1])
     sports_total   = int(cm[1, :].sum())
     biz_to_sci     = int(cm[2, 3])
     sci_to_biz     = int(cm[3, 2])
-
     cmds += [
         "% -- Confusion matrix",
         _cmd("cmSportsCorrect", str(sports_correct)),
@@ -187,8 +147,6 @@ def write_stats_tex(
         _cmd("cmSciToBiz",      str(sci_to_biz)),
         "",
     ]
-
-    # -- Dataset stats
     cmds += [
         "% -- Dataset",
         _cmd("nSamples",        "8{,}000"),
@@ -198,8 +156,6 @@ def write_stats_tex(
         _cmd("vocabSize",       "5{,}000"),
         "",
     ]
-
-    # -- Write file (explicit UTF-8, no Unicode box-drawing chars anywhere)
     os.makedirs("outputs", exist_ok=True)
     with open(OUT_PATH, "w", encoding="utf-8") as fh:
         fh.write("\n".join(cmds))

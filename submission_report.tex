@@ -44,7 +44,7 @@
 \section{Introduction and Dataset}
 
 This project compares classical ML models across three text representation paradigms:
-\textit{sparse features} (BoW, TF-IDF), \textit{static dense embeddings} (GloVe\,—\,bonus),
+\textit{sparse features} (BoW, TF-IDF), \textit{static dense embeddings} (GloVe),
 and \textit{contextual embeddings} (DistilBERT). Only classical models are trained; DistilBERT
 and GloVe are used strictly as frozen feature extractors. The three-way axis isolates whether
 gains come from density alone or from contextual understanding.
@@ -68,31 +68,31 @@ Split: \nTrain{} train / \nTest{} test (80/20, random\_state\,=\,42).
 The dataset is near-perfectly balanced, eliminating class-imbalance as a confound.
 Article lengths follow a roughly Gaussian distribution; very few exceed 100 tokens.
 Discriminative vocabulary (extracted from LR coefficients) shows Sports vocabulary is
-highly domain-specific, while Business and Sci/Tech share technological terminology
-— foreshadowing their classifier confusion.
+highly domain-specific, while Business and Sci/Tech share technological terminology,
+foreshadowing their classifier confusion.
 
 %% ── 3. Methodology ─────────────────────────────────────────────────────────
 \section{Methodology}
 
-\textbf{Part A — Sparse Features.}
+\textbf{Part A: Sparse Features.}
 \begin{itemize}
   \item \textbf{BoW}: unigram raw-count, top-\vocabSize{} vocab, min\_df\,=\,2, alphabetic tokens $\geq$3 chars.
   \item \textbf{TF-IDF}: unigram+bigram, sublinear\_tf, top-\vocabSize{} vocab, min\_df\,=\,2.
 \end{itemize}
 
-\textbf{Part B — GloVe (Bonus).}
+\textbf{Part B: GloVe (Bonus).}
 100-d glove-wiki-gigaword-100 (6B tokens); documents represented as arithmetic mean of known
 word vectors, cached as \texttt{.npy}.
 
-\textbf{Part C — DistilBERT.}
+\textbf{Part C: DistilBERT.}
 Frozen \texttt{distilbert-base-uncased}; [CLS] token from final hidden state yields a 768-d
 vector per article, computed once on GPU (Kaggle) and cached.
 
-\textbf{Part D — Models.}
+\textbf{Part D: Models.}
 Logistic Regression (\texttt{max\_iter=1000}), Linear SVM, RBF SVM, KNN ($k$\,=\,5),
 KMeans ($K$\,=\,4, unsupervised baseline).
 
-\textbf{Part E — Dimensionality Reduction.}
+\textbf{Part E: Dimensionality Reduction.}
 Truncated SVD on TF-IDF and PCA on DistilBERT/GloVe, all compressed to 100 components.
 
 \begin{figure}[H]
@@ -205,7 +205,7 @@ GloVe NMI\,=\,\kmGloveNmi, ARI\,=\,\kmGloveAri.
 
 \textbf{Curse of dimensionality.}
 KNN on 5{,}000-d sparse BoW scores only \knnBoWAcc{}; on dense 768-d DistilBERT it reaches
-\knnBertAcc{} — a \knnJumpPP-point gain from feature change alone.
+\knnBertAcc{} which is a \knnJumpPP{}-point gain from feature change alone.
 
 \textbf{Compression behaviour.}
 PCA retains \bertPcaVar{} of DistilBERT variance in 100 components, allowing LR to
@@ -221,12 +221,12 @@ no-semantics $\to$ co-occurrence $\to$ static word semantics $\to$ contextual se
 
 \textbf{Class-level confusion.}
 Sports is the easiest class due to highly domain-specific vocabulary. \cmBizToSci{} Business
-articles are misclassified as Sci/Tech — modern tech-company news genuinely straddles both
+articles are misclassified as Sci/Tech as modern tech-company news genuinely straddles both
 domains. This confusion hierarchy is preserved across all feature spaces.
 
 \textbf{KMeans as unsupervised probe.}
 DistilBERT achieves NMI\,=\,\kmBertNmi{} and ARI\,=\,\kmBertAri{} \textit{without any classifier},
-vs NMI\,=\,\kmBowNmi{} for BoW — confirming the class separation is a geometric property of
+vs NMI\,=\,\kmBowNmi{} for BoW likewise confirming the class separation is a geometric property of
 the embedding space, not a classifier artefact.
 
 \textbf{Limitations.}
